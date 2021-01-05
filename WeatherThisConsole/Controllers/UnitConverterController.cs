@@ -1,0 +1,88 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace WeatherThisConsole.Controllers
+{
+    class UnitConverterController
+    {
+        public decimal? ConvertCelsiusToFahrenheit(decimal? celsiusValue)
+        {
+            if (celsiusValue is null) return 0;
+            var returnValue = (celsiusValue * Convert.ToDecimal(1.8)) + 32;
+            return returnValue;
+        }
+        public decimal? ConvertCelsiusToFahrenheit(decimal? celsiusValue, bool isImperial)
+        {
+            if (celsiusValue is null) return 0;
+            var returnValue = (celsiusValue * Convert.ToDecimal(1.8)) + 32;
+            if (!isImperial) returnValue = celsiusValue;
+            return returnValue;
+        }
+        public decimal? ConvertFahrenheitToCelsius(decimal? fahrenheitValue)
+        {
+            if (fahrenheitValue is null) return 0;
+            var returnValue = (fahrenheitValue - Convert.ToDecimal(32)) * Convert.ToDecimal(1.8);
+            return returnValue;
+        }
+        public decimal? ConvertFahrenheitToCelsius(decimal? fahrenheitValue, bool isImperial)
+        {
+            if (fahrenheitValue is null) return 0;
+            var returnValue = (fahrenheitValue - Convert.ToDecimal(32)) * Convert.ToDecimal(1.8);
+            if (isImperial) returnValue = fahrenheitValue;
+            return returnValue;
+        }
+        public decimal? ConvertKilometerToMile(decimal? kilometerValue)
+        {
+            if (kilometerValue is null) return 0;
+            var returnValue = kilometerValue * Convert.ToDecimal(1.60934);
+            return returnValue;
+        }
+        public decimal? ConvertKilometerToMile(decimal? kilometerValue, bool isImperial)
+        {
+            if (kilometerValue is null) return 0;
+            var returnValue = kilometerValue * Convert.ToDecimal(1.60934);
+            if (!isImperial) returnValue = kilometerValue;
+            return returnValue;
+        }
+        public decimal? ConvertMileToKilometer(decimal? mileValue)
+        {
+            if (mileValue is null) return 0;
+            var returnValue = mileValue/ Convert.ToDecimal(1.60934);
+            return returnValue;
+        }
+        public decimal? ConvertMileToKilometer(decimal? mileValue, bool isImperial)
+        {
+            if (mileValue is null) return 0;
+            var returnValue = mileValue / Convert.ToDecimal(1.60934);
+            if (isImperial) returnValue = mileValue;
+            return returnValue;
+        }
+        public string ConvertDegreeToDirection(decimal? degreeValue)
+        {
+            string returnValue = "-";
+
+            if (degreeValue is null) return "-";
+
+            if (degreeValue >= Convert.ToDecimal(348.75) && degreeValue < Convert.ToDecimal(11.25)) returnValue = "N";
+            if (degreeValue >= Convert.ToDecimal(11.25) && degreeValue < Convert.ToDecimal(33.75)) returnValue = "NNE";
+            if (degreeValue >= Convert.ToDecimal(33.75) && degreeValue < Convert.ToDecimal(56.25)) returnValue = "NE";
+            if (degreeValue >= Convert.ToDecimal(56.25) && degreeValue < Convert.ToDecimal(78.75)) returnValue = "ENE";
+            if (degreeValue >= Convert.ToDecimal(78.75) && degreeValue < Convert.ToDecimal(101.25)) returnValue = "E";
+            if (degreeValue >= Convert.ToDecimal(101.25) && degreeValue < Convert.ToDecimal(123.75)) returnValue = "ESE";
+            if (degreeValue >= Convert.ToDecimal(123.75) && degreeValue < Convert.ToDecimal(146.25)) returnValue = "SE";
+            if (degreeValue >= Convert.ToDecimal(146.25) && degreeValue < Convert.ToDecimal(168.75)) returnValue = "SSE";
+            if (degreeValue >= Convert.ToDecimal(168.75) && degreeValue < Convert.ToDecimal(191.25)) returnValue = "S";
+            if (degreeValue >= Convert.ToDecimal(191.25) && degreeValue < Convert.ToDecimal(213.75)) returnValue = "SSW";
+            if (degreeValue >= Convert.ToDecimal(213.75) && degreeValue < Convert.ToDecimal(236.25)) returnValue = "SW";
+            if (degreeValue >= Convert.ToDecimal(236.25) && degreeValue < Convert.ToDecimal(258.75)) returnValue = "WSW";
+            if (degreeValue >= Convert.ToDecimal(258.75) && degreeValue < Convert.ToDecimal(281.25)) returnValue = "W";
+            if (degreeValue >= Convert.ToDecimal(281.25) && degreeValue < Convert.ToDecimal(303.75)) returnValue = "WNW";
+            if (degreeValue >= Convert.ToDecimal(303.75) && degreeValue < Convert.ToDecimal(326.25)) returnValue = "NW";
+            if (degreeValue >= Convert.ToDecimal(326.25) && degreeValue < Convert.ToDecimal(348.75)) returnValue = "NNW";
+
+
+            return returnValue;
+        }
+    }
+}

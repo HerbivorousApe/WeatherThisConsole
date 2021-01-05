@@ -8,7 +8,6 @@ namespace WeatherThisConsole.Models
 {
     class InfoReturnModel
     {
-       // public List<string> Context { get; set; }
         public string Id { get; set; }
         public string Type { get; set; }
         public Geometry Geometry { get; set; }

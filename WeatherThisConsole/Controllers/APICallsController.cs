@@ -19,6 +19,10 @@ namespace WeatherThisConsole.Controllers
             await GetWeatherLocationData();
 
             Console.WriteLine("");
+            Console.WriteLine("Loading observation station identifier from weather.gov ...");
+            await GetCurrentObservationStations();
+
+            Console.WriteLine("");
             Console.WriteLine("Loading current and historical observation data from weather.gov ...");
             await GetCurrentObservationData();
 
@@ -71,6 +75,7 @@ namespace WeatherThisConsole.Controllers
 
             InfoReturnModel infoReturn = JsonConvert.DeserializeObject<InfoReturnModel>(response);
 
+            LocalValuesModel.ObservationStationLink = infoReturn.Properties.ObservationStations;
             LocalValuesModel.RadarStation = infoReturn.Properties.RadarStation;
             LocalValuesModel.SevenDayForecastLink = infoReturn.Properties.Forecast;
         }
@@ -102,11 +107,28 @@ namespace WeatherThisConsole.Controllers
         public async Task GetCurrentObservationData()  // link = https://api.weather.gov/stations/KMOB/observations
         {
             HttpClient client = new HttpClient();
-            
+            var link = $"https://api.weather.gov/stations/{LocalValuesModel.RadarStation}/observations";
+
             client.DefaultRequestHeaders.Add("User-Agent", "SlackShack");
-            var response = await client.GetStringAsync($"https://api.weather.gov/stations/{LocalValuesModel.RadarStation}/observations");
+            var response = await client.GetStringAsync(link);
 
             LocalValuesModel.CurrentObservation = response;
+        }
+
+
+        public async Task GetCurrentObservationStations()  // link = https://api.weather.gov/gridpoints/MOB/44,65/stations
+        {
+            HttpClient client = new HttpClient();
+            var link = LocalValuesModel.ObservationStationLink;
+
+            client.DefaultRequestHeaders.Add("User-Agent", "SlackShack");
+            var response = await client.GetStringAsync(link);
+
+            ObservationStationModel infoReturn = JsonConvert.DeserializeObject<ObservationStationModel>(response);
+
+            //LocalValuesModel.ObservationStations = response; // For future option to choose a different observation station
+            LocalValuesModel.RadarStation = infoReturn.Features[0].Properties.StationIdentifier;
+            
         }
     }
 }

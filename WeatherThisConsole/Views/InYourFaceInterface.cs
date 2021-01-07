@@ -166,7 +166,7 @@ namespace WeatherThisConsole.Views
 
         public async Task SevenDayForecastHourlyView()
         {
-            var infoReturn = JsonConvert.DeserializeObject<SevenDayForecastHourlyModel>(LocalValuesModel.SevenDayForecast);
+            var infoReturn = JsonConvert.DeserializeObject<SevenDayForecastHourlyModel>(LocalValuesModel.SevenDayForecastHourly);
             var unitConvert = new UnitConverterController();
             var menuController = new MenuController();
 
@@ -212,7 +212,7 @@ namespace WeatherThisConsole.Views
                     {
                     for (var j = 0; j < snip.Count; j++)
                     {
-                        if (hour == snip[j].StartTime.ToString("HH:mm") && dayList[i] == snip[j].StartTime.ToString("MMM-dd"))
+                        if (hour == snip[j].StartTime.ToString("HH:00") && dayList[i] == snip[j].StartTime.ToString("MMM-dd"))
                         {
                             Console.Write("{0,-15}", 
                                 $"{Math.Round((decimal)unitConvert.ConvertFahrenheitToCelsius(snip[j].Temperature.Value), 0)}{tempEnd} / " +

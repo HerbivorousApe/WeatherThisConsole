@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using WeatherThisConsole.Models;
@@ -7,9 +8,12 @@ namespace WeatherThisConsole.Controllers
 {
     class MiscController
     {
-        public List<string> CreateDayList(SevenDayForecastHourlyModel sevenDayForecast)
+        public List<string> CreateDayListForecast()
         {
-            var snip = sevenDayForecast.Properties.Periods;
+
+            var infoReturn = JsonConvert.DeserializeObject<SevenDayForecastHourlyModel>(LocalValuesModel.SevenDayForecastHourly);
+
+            var snip = infoReturn.Properties.Periods;
             string snipDate = "";
             var returnValue = new List<string>();
 
@@ -24,26 +28,28 @@ namespace WeatherThisConsole.Controllers
             return returnValue;
         }
 
-        public List<string> CreateDayList(SevenDayHistoryHourlyModel sevenDayForecast)
-        {
-            var snip = sevenDayForecast.Properties.Periods;
-            string snipDate = "";
-            var returnValue = new List<string>();
+        //public List<string> CreateDayList(SevenDayHistoryHourlyModel sevenDayForecast)
+        //{
+        //    var snip = sevenDayForecast.Properties.Periods;
+        //    string snipDate = "";
+        //    var returnValue = new List<string>();
 
-            for (int i = 0; i < snip.Count; i++)
-            {
-                if (snipDate != snip[i].StartTime.ToString("MMM-dd"))
-                {
-                    snipDate = snip[i].StartTime.ToString("MMM-dd");
-                    returnValue.Add(snipDate);
-                }
-            }
-            return returnValue;
-        }
+        //    for (int i = 0; i < snip.Count; i++)
+        //    {
+        //        if (snipDate != snip[i].StartTime.ToString("MMM-dd"))
+        //        {
+        //            snipDate = snip[i].StartTime.ToString("MMM-dd");
+        //            returnValue.Add(snipDate);
+        //        }
+        //    }
+        //    return returnValue;
+        //}
 
-        public List<string> CreateDayList(CurrentObservationModel sevenDayForecast)
+        public List<string> CreateDayListHistory()
         {
-            var snip = sevenDayForecast.Features;
+            var infoReturn = JsonConvert.DeserializeObject<CurrentObservationModel>(LocalValuesModel.CurrentObservation);
+
+            var snip = infoReturn.Features;
             string snipDate = "";
             var returnValue = new List<string>();
 

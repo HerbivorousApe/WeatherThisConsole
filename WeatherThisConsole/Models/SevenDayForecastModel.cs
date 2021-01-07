@@ -4,28 +4,28 @@ using System.Text;
 
 namespace WeatherThisConsole.Models
 {
-    class SevenDayForecastModel
+    public class SevenDayForecastModel
     {
-        public SevenDayForeCastProperties Properties { get; set; }
+        public SevenDayForecastProperties Properties { get; set; }
     }
 
-    class SevenDayForeCastProperties
+    public class SevenDayForecastProperties
     {
-        public DateTime updated { get; set; }
+        public DateTime Updated { get; set; }
         public List<SevenDayForecastPeriods> Periods { get; set; }
     }
 
-    class SevenDayForecastPeriods
+    public class SevenDayForecastPeriods
     {
-        public int Number { get; set; }
-        public string Name { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
-        public bool IsDayTime { get; set; }
-        public int Temperature { get; set; }
-        public string WindSpeed { get; set; }
-        public string WindDirection { get; set; }
-        public string ShortForecast { get; set; }
-        public string DetailedForecast { get; set; }
+        public int Number { get; set; } = 0;
+        public string Name { get; set; } = "";
+        public DateTime StartTime { get; set; } = DateTime.MinValue;
+        public DateTime EndTime { get; set; } = DateTime.MaxValue;
+        public bool IsDayTime { get; set; } = true;
+        public int Temperature { get; set; } = 0;
+        public string WindSpeed { get; set; } = "";
+        public string WindDirection { get; set; } = "";
+        public string ShortForecast { get; set; } = "";
+        public string DetailedForecast { get; set; } = "";
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WeatherThisConsole.Models;
 
 namespace WeatherThisConsole.Controllers
 {
@@ -10,52 +11,28 @@ namespace WeatherThisConsole.Controllers
         {
             if (celsiusValue is null) return 0;
             var returnValue = (celsiusValue * Convert.ToDecimal(1.8)) + 32;
-            return returnValue;
-        }
-        public decimal? ConvertCelsiusToFahrenheit(decimal? celsiusValue, bool isImperial)
-        {
-            if (celsiusValue is null) return 0;
-            var returnValue = (celsiusValue * Convert.ToDecimal(1.8)) + 32;
-            if (!isImperial) returnValue = celsiusValue;
+            if (!LocalValuesModel.IsImperial) returnValue = celsiusValue;
             return returnValue;
         }
         public decimal? ConvertFahrenheitToCelsius(decimal? fahrenheitValue)
         {
             if (fahrenheitValue is null) return 0;
             var returnValue = (fahrenheitValue - Convert.ToDecimal(32)) * Convert.ToDecimal(1.8);
-            return returnValue;
-        }
-        public decimal? ConvertFahrenheitToCelsius(decimal? fahrenheitValue, bool isImperial)
-        {
-            if (fahrenheitValue is null) return 0;
-            var returnValue = (fahrenheitValue - Convert.ToDecimal(32)) * Convert.ToDecimal(1.8);
-            if (isImperial) returnValue = fahrenheitValue;
+            if (LocalValuesModel.IsImperial) returnValue = fahrenheitValue;
             return returnValue;
         }
         public decimal? ConvertKilometerToMile(decimal? kilometerValue)
         {
             if (kilometerValue is null) return 0;
             var returnValue = kilometerValue * Convert.ToDecimal(1.60934);
-            return returnValue;
-        }
-        public decimal? ConvertKilometerToMile(decimal? kilometerValue, bool isImperial)
-        {
-            if (kilometerValue is null) return 0;
-            var returnValue = kilometerValue * Convert.ToDecimal(1.60934);
-            if (!isImperial) returnValue = kilometerValue;
+            if (!LocalValuesModel.IsImperial) returnValue = kilometerValue;
             return returnValue;
         }
         public decimal? ConvertMileToKilometer(decimal? mileValue)
         {
             if (mileValue is null) return 0;
-            var returnValue = mileValue/ Convert.ToDecimal(1.60934);
-            return returnValue;
-        }
-        public decimal? ConvertMileToKilometer(decimal? mileValue, bool isImperial)
-        {
-            if (mileValue is null) return 0;
             var returnValue = mileValue / Convert.ToDecimal(1.60934);
-            if (isImperial) returnValue = mileValue;
+            if (LocalValuesModel.IsImperial) returnValue = mileValue;
             return returnValue;
         }
         public string ConvertDegreeToDirection(decimal? degreeValue)

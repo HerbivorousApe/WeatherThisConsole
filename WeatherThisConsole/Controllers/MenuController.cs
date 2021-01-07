@@ -10,34 +10,28 @@ namespace WeatherThisConsole.Controllers
     class MenuController
     {
         
-        
-
-        public async Task Menu(LocalValuesModel local, ConsoleKey keyPress)
+        public async Task Menu(ConsoleKey keyPress)
         {
-            APICallsController apiController = new APICallsController();
-            InYourFaceInterface view = new InYourFaceInterface();
 
-            var sevenDayForecast = await apiController.GetSevenDayForecast(local.SevenDayForecastLink);
-            var sevenDayForecastHourly = await apiController.GetSevenDayForecastHourly(local.SevenDayForecastLink);
-            var sevenDayHistoryHourly = await apiController.GetCurrentObservationData(local.RadarStation);
+            var view = new InYourFaceInterface();
 
             switch (keyPress)
             {
-                case ConsoleKey.D1: await view.SevenDayForecastView(sevenDayForecast, local); break;
-                case ConsoleKey.NumPad1: await view.SevenDayForecastView(sevenDayForecast, local); break;
+                case ConsoleKey.D1: await view.SevenDayForecastView(); break;
+                case ConsoleKey.NumPad1: await view.SevenDayForecastView(); break;
 
-                case ConsoleKey.D2: await view.SevenDayForecastHourlyView(sevenDayForecastHourly, local); break;
-                case ConsoleKey.NumPad2: await view.SevenDayForecastHourlyView(sevenDayForecastHourly, local); break;
+                case ConsoleKey.D2: await view.SevenDayForecastHourlyView(); break;
+                case ConsoleKey.NumPad2: await view.SevenDayForecastHourlyView(); break;
 
 
-                case ConsoleKey.D3: await view.SevenDayHistoryHourlyView(sevenDayHistoryHourly, local); break;
-                case ConsoleKey.NumPad3: await view.SevenDayHistoryHourlyView(sevenDayHistoryHourly, local); break;
+                case ConsoleKey.D3: await view.SevenDayHistoryHourlyView(); break;
+                case ConsoleKey.NumPad3: await view.SevenDayHistoryHourlyView(); break;
 
-                case ConsoleKey.D4: await view.UpdateZipView(local); break;
-                case ConsoleKey.NumPad4: await view.UpdateZipView(local); break;
+                case ConsoleKey.D4: await view.UpdateZipView(); break;
+                case ConsoleKey.NumPad4: await view.UpdateZipView(); break;
 
-                case ConsoleKey.D5: local.IsImperial = !local.IsImperial; await view.Welcome(local); break;
-                case ConsoleKey.NumPad5: local.IsImperial = !local.IsImperial; await view.Welcome(local); break;
+                case ConsoleKey.D5: LocalValuesModel.IsImperial = !LocalValuesModel.IsImperial; await view.Welcome(); break;
+                case ConsoleKey.NumPad5: LocalValuesModel.IsImperial = !LocalValuesModel.IsImperial; await view.Welcome(); break;
 
                 case ConsoleKey.Escape: Environment.Exit(0); break;
 
@@ -45,7 +39,7 @@ namespace WeatherThisConsole.Controllers
             }
         }
 
-        public async Task ReturnToWelcome(LocalValuesModel local)
+        public async Task ReturnToWelcome()
         {
             InYourFaceInterface view = new InYourFaceInterface();
 
@@ -58,7 +52,7 @@ namespace WeatherThisConsole.Controllers
             switch (menuChoice)
             {
                 case ConsoleKey.Escape: Environment.Exit(0); break;
-                default: await view.Welcome(local); break;
+                default: await view.Welcome(); break;
             }
         }
     }

@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using WeatherThisConsole.Models;
 
 namespace WeatherThisConsole.Controllers
@@ -27,23 +25,6 @@ namespace WeatherThisConsole.Controllers
             }
             return returnValue;
         }
-
-        //public List<string> CreateDayList(SevenDayHistoryHourlyModel sevenDayForecast)
-        //{
-        //    var snip = sevenDayForecast.Properties.Periods;
-        //    string snipDate = "";
-        //    var returnValue = new List<string>();
-
-        //    for (int i = 0; i < snip.Count; i++)
-        //    {
-        //        if (snipDate != snip[i].StartTime.ToString("MMM-dd"))
-        //        {
-        //            snipDate = snip[i].StartTime.ToString("MMM-dd");
-        //            returnValue.Add(snipDate);
-        //        }
-        //    }
-        //    return returnValue;
-        //}
 
         public List<string> CreateDayListHistory()
         {

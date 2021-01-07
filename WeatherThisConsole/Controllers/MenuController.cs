@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using WeatherThisConsole.Models;
 using WeatherThisConsole.Views;
@@ -9,10 +7,8 @@ namespace WeatherThisConsole.Controllers
 {
     class MenuController
     {
-        
         public async Task Menu(ConsoleKey keyPress)
         {
-
             var view = new InYourFaceInterface();
 
             switch (keyPress)
@@ -41,7 +37,7 @@ namespace WeatherThisConsole.Controllers
 
         public async Task ReturnToWelcome()
         {
-            InYourFaceInterface view = new InYourFaceInterface();
+            var view = new InYourFaceInterface();
 
             Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.White;

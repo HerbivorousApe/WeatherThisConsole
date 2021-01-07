@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 /// <summary>
 /// Modeling everything for https://api.weather.gov/points/30.6712,-88.2321
 /// </summary>

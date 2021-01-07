@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using WeatherThisConsole.Models;
 using WeatherThisConsole.Controllers;
 using System.Threading.Tasks;
@@ -42,24 +40,18 @@ namespace WeatherThisConsole.Views
             //Row for active alerts
 
             Console.WriteLine("");
-
-            
-
             CurrentObservationData();
             Console.WriteLine("");
             SeventyTwoHourForecast();
             Console.WriteLine("");
             await Menu();
-
-            //Console.Write($"If this is correct press Enter. Otherwise, please type your zip code then press Enter: ");
-            //return Console.ReadLine();
         }
 
 
         public void CurrentObservationData()
         {
-            CurrentObservationModel infoReturn = JsonConvert.DeserializeObject<CurrentObservationModel>(LocalValuesModel.CurrentObservation);
-            UnitConverterController unitConvert = new UnitConverterController();
+            var infoReturn = JsonConvert.DeserializeObject<CurrentObservationModel>(LocalValuesModel.CurrentObservation);
+            var unitConvert = new UnitConverterController();
 
             var current = infoReturn.Features[0].Properties;
 
@@ -83,9 +75,8 @@ namespace WeatherThisConsole.Views
 
         public void SeventyTwoHourForecast()
         {
-
-            SevenDayForecastModel infoReturn = JsonConvert.DeserializeObject<SevenDayForecastModel>(LocalValuesModel.SevenDayForecast);
-            UnitConverterController unitConvert = new UnitConverterController();
+            var infoReturn = JsonConvert.DeserializeObject<SevenDayForecastModel>(LocalValuesModel.SevenDayForecast);
+            var unitConvert = new UnitConverterController();
 
             var period = infoReturn.Properties.Periods;
 
@@ -126,7 +117,7 @@ namespace WeatherThisConsole.Views
 
         public async Task Menu()
         {
-            MenuController menuController = new MenuController();
+            var menuController = new MenuController();
 
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("  1. Seven Day Forecast");
@@ -140,15 +131,13 @@ namespace WeatherThisConsole.Views
 
             ConsoleKey menuChoice = Console.ReadKey(true).Key;
 
-            //var controller = new MenuController();
-
             await menuController.Menu(menuChoice);
         }
 
         public async Task SevenDayForecastView()
         {
-            SevenDayForecastModel infoReturn = JsonConvert.DeserializeObject<SevenDayForecastModel>(LocalValuesModel.SevenDayForecast);
-            MenuController menuController = new MenuController();
+            var infoReturn = JsonConvert.DeserializeObject<SevenDayForecastModel>(LocalValuesModel.SevenDayForecast);
+            var menuController = new MenuController();
 
             Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Red;
@@ -179,8 +168,6 @@ namespace WeatherThisConsole.Views
 
             var dayList = miscController.CreateDayListForecast();
 
-            //foreach (string day in dayList)
-            //for (int i = 0; i < dayList.Count-1; i++)
             for (int i = 0; i < 7; i++)
             {
                 Console.Write("{0,-15}", $"  {dayList[i]}");
@@ -207,7 +194,6 @@ namespace WeatherThisConsole.Views
 
                 column = true;
 
-                //for (var i = 0; i < dayList.Count-1; i++)
                 for (var i = 0; i < 7; i++)
                     {
                     for (var j = 0; j < snip.Count; j++)
@@ -247,7 +233,6 @@ namespace WeatherThisConsole.Views
 
             var dayList = miscController.CreateDayListHistory();
 
-            //foreach (string day in dayList)
             for (int i = 0; i < 7; i++)
             {
                 Console.Write("{0,-15}", $"  {dayList[i]}");
@@ -275,7 +260,6 @@ namespace WeatherThisConsole.Views
 
                 column = true;
 
-                //for (var i = 0; i < dayList.Count; i++)
                 for (int i = 0; i < 7; i++)
                 {
                     for (var j = 0; j < snip.Count; j++)

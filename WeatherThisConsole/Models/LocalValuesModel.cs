@@ -13,12 +13,14 @@ namespace WeatherThisConsole.Models
         public static string ObservationStationLink { get; set; }
         public static string City { get; set; }
         public static string State { get; set; }
-        
+        public static string ForecastZone { get; set; }
+
         public static string CurrentObservation { get; set; }
         public static string SevenDayForecast { get; set; }
         public static string SevenDayForecastImperial { get; set; }
         public static string SevenDayForecastHourly { get; set; }
         public static string ObservationStations { get; set; }
+        public static string Alerts { get; set; }
     }
 
 

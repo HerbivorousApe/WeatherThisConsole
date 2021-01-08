@@ -37,13 +37,12 @@ namespace WeatherThisConsole.Views
             Console.Write("{0,-20}\t{1,-5}", "", $"System of Units: "); 
             Console.ForegroundColor = ConsoleColor.Yellow; Console.WriteLine(unitType); Console.ForegroundColor = ConsoleColor.Gray;
 
-            //Row for active alerts
-
             Console.WriteLine("");
             CurrentObservationData();
             Console.WriteLine("");
             SeventyTwoHourForecast();
             Console.WriteLine("");
+            Alerts();
             await Menu();
         }
 
@@ -105,6 +104,21 @@ namespace WeatherThisConsole.Views
             Console.WriteLine("{0,-20}", $"WND: {period[5].WindDirection} " +
                 $"{Math.Round((decimal)unitConvert.ConvertKilometerToMile(Convert.ToDecimal(period[5].WindSpeed.Substring(0, 2).Trim())))}{LocalValuesModel.SpeedEnd}");
 
+        }
+
+        public void Alerts()
+        {
+            var infoReturn = JsonConvert.DeserializeObject<AlertsModel>(LocalValuesModel.Alerts);
+
+            foreach (var alert in infoReturn.Features)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"*** {alert.Properties.Headline} ***");
+                Console.WriteLine("");
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine(alert.Properties.Description);
+                Console.WriteLine(alert.Properties.Instruction);
+            }
         }
 
         public async Task Menu()

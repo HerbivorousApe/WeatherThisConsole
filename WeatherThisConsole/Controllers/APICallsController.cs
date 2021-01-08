@@ -17,6 +17,10 @@ namespace WeatherThisConsole.Controllers
             await GetWeatherLocationData();
 
             Console.WriteLine("");
+            Console.WriteLine("Loading alert data from weather.gov ...");
+            await GetAlertData();
+
+            Console.WriteLine("");
             Console.WriteLine("Loading observation station identifier from weather.gov ...");
             await GetCurrentObservationStations();
 
@@ -91,6 +95,17 @@ namespace WeatherThisConsole.Controllers
             LocalValuesModel.ObservationStationLink = infoReturn.Properties.ObservationStations;
             LocalValuesModel.RadarStation = infoReturn.Properties.RadarStation;
             LocalValuesModel.SevenDayForecastLink = infoReturn.Properties.Forecast;
+            LocalValuesModel.ForecastZone = infoReturn.Properties.ForecastZone.Replace("https://api.weather.gov/zones/forecast/", "");
+        }
+
+        public async Task GetAlertData() //https://api.weather.gov/alerts?active=true&status=actual
+        {
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("User-Agent", "SlackShack");
+            var link = $"https://api.weather.gov/alerts?active=true&status=actual&zone={LocalValuesModel.ForecastZone}";
+            var response = await client.GetStringAsync(link);
+
+            LocalValuesModel.Alerts = response;
         }
 
         public async Task GetSevenDayForecast() // apiLink = https://api.weather.gov/gridpoints/MOB/44,64/forecast?units=si

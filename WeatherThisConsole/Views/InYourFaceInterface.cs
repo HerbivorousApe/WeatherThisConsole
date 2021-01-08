@@ -61,15 +61,11 @@ namespace WeatherThisConsole.Views
             var windDir = unitConvert.ConvertDegreeToDirection(current.WindDirection.Value);
             var humidity = Math.Round(Convert.ToDecimal(current.RelativeHumidity.Value));
 
-            var tempEnd = "°F"; var speedEnd = "mph";
-
-            if (!LocalValuesModel.IsImperial) { tempEnd = "°C"; speedEnd = "kph"; };
-
             Console.Write("{0,-30}", " Current Conditions:");
-            Console.Write("{0,-20}", $"TEMP: {temp}{tempEnd}");
-            Console.Write("{0,-20}", $"WND: {windDir} {wind}{speedEnd}");
+            Console.Write("{0,-20}", $"TEMP: {temp}{LocalValuesModel.TempEnd}");
+            Console.Write("{0,-20}", $"WND: {windDir} {wind}{LocalValuesModel.SpeedEnd}");
             Console.Write("{0,-20}", $"RH: {humidity}%");
-            Console.WriteLine("{0,-20}", $"DWPT: {dew}{tempEnd}");
+            Console.WriteLine("{0,-20}", $"DWPT: {dew}{LocalValuesModel.TempEnd}");
 
         }
 
@@ -80,10 +76,6 @@ namespace WeatherThisConsole.Views
 
             var period = infoReturn.Properties.Periods;
 
-            var tempEnd = "°F"; var speedEnd = "mph";
-
-            if (!LocalValuesModel.IsImperial) { tempEnd = "°C"; speedEnd = "kph"; };
-
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write("{0,-20}", " " + period[0].Name);
             Console.Write("{0,-20}", period[1].Name);
@@ -93,25 +85,25 @@ namespace WeatherThisConsole.Views
             Console.WriteLine("{0,-20}", period[5].Name);
             Console.ForegroundColor = ConsoleColor.Gray;
 
-            Console.Write("{0,-20}", $"  {Math.Round((decimal)unitConvert.ConvertFahrenheitToCelsius(period[0].Temperature), 0)}{tempEnd}");
-            Console.Write("{0,-20}", $"  {Math.Round((decimal)unitConvert.ConvertFahrenheitToCelsius(period[1].Temperature), 0)}{tempEnd}");
-            Console.Write("{0,-20}", $"  {Math.Round((decimal)unitConvert.ConvertFahrenheitToCelsius(period[2].Temperature), 0)}{tempEnd}");
-            Console.Write("{0,-20}", $"  {Math.Round((decimal)unitConvert.ConvertFahrenheitToCelsius(period[3].Temperature), 0)}{tempEnd}");
-            Console.Write("{0,-20}", $"  {Math.Round((decimal)unitConvert.ConvertFahrenheitToCelsius(period[4].Temperature), 0)}{tempEnd}");
-            Console.WriteLine("{0,-20}", $"  {Math.Round((decimal)unitConvert.ConvertFahrenheitToCelsius(period[5].Temperature), 0)}{tempEnd}");
+            Console.Write("{0,-20}", $"  {Math.Round((decimal)unitConvert.ConvertCelsiusToFahrenheit(period[0].Temperature), 0)}{LocalValuesModel.TempEnd}");
+            Console.Write("{0,-20}", $"  {Math.Round((decimal)unitConvert.ConvertCelsiusToFahrenheit(period[1].Temperature), 0)}{LocalValuesModel.TempEnd}");
+            Console.Write("{0,-20}", $"  {Math.Round((decimal)unitConvert.ConvertCelsiusToFahrenheit(period[2].Temperature), 0)}{LocalValuesModel.TempEnd}");
+            Console.Write("{0,-20}", $"  {Math.Round((decimal)unitConvert.ConvertCelsiusToFahrenheit(period[3].Temperature), 0)}{LocalValuesModel.TempEnd}");
+            Console.Write("{0,-20}", $"  {Math.Round((decimal)unitConvert.ConvertCelsiusToFahrenheit(period[4].Temperature), 0)}{LocalValuesModel.TempEnd}");
+            Console.WriteLine("{0,-20}", $"  {Math.Round((decimal)unitConvert.ConvertCelsiusToFahrenheit(period[5].Temperature), 0)}{LocalValuesModel.TempEnd}");
 
             Console.Write("{0,-20}", $" WND: {period[0].WindDirection} " +
-                $"{Math.Round((decimal)unitConvert.ConvertMileToKilometer(Convert.ToDecimal(period[0].WindSpeed.Substring(0, 2).Trim())))}{speedEnd}");
+                $"{Math.Round((decimal)unitConvert.ConvertKilometerToMile(Convert.ToDecimal(period[0].WindSpeed.Substring(0, 2).Trim())))}{LocalValuesModel.SpeedEnd}");
             Console.Write("{0,-20}", $"WND: {period[1].WindDirection} " +
-                $"{Math.Round((decimal)unitConvert.ConvertMileToKilometer(Convert.ToDecimal(period[1].WindSpeed.Substring(0, 2).Trim())))}{speedEnd}");
+                $"{Math.Round((decimal)unitConvert.ConvertKilometerToMile(Convert.ToDecimal(period[1].WindSpeed.Substring(0, 2).Trim())))}{LocalValuesModel.SpeedEnd}");
             Console.Write("{0,-20}", $"WND: {period[2].WindDirection} " +
-                $"{Math.Round((decimal)unitConvert.ConvertMileToKilometer(Convert.ToDecimal(period[2].WindSpeed.Substring(0, 2).Trim())))}{speedEnd}");
+                $"{Math.Round((decimal)unitConvert.ConvertKilometerToMile(Convert.ToDecimal(period[2].WindSpeed.Substring(0, 2).Trim())))}{LocalValuesModel.SpeedEnd}");
             Console.Write("{0,-20}", $"WND: {period[3].WindDirection} " +
-                $"{Math.Round((decimal)unitConvert.ConvertMileToKilometer(Convert.ToDecimal(period[3].WindSpeed.Substring(0, 2).Trim())))}{speedEnd}");
+                $"{Math.Round((decimal)unitConvert.ConvertKilometerToMile(Convert.ToDecimal(period[3].WindSpeed.Substring(0, 2).Trim())))}{LocalValuesModel.SpeedEnd}");
             Console.Write("{0,-20}", $"WND: {period[4].WindDirection} " +
-                $"{Math.Round((decimal)unitConvert.ConvertMileToKilometer(Convert.ToDecimal(period[4].WindSpeed.Substring(0, 2).Trim())))}{speedEnd}");
+                $"{Math.Round((decimal)unitConvert.ConvertKilometerToMile(Convert.ToDecimal(period[4].WindSpeed.Substring(0, 2).Trim())))}{LocalValuesModel.SpeedEnd}");
             Console.WriteLine("{0,-20}", $"WND: {period[5].WindDirection} " +
-                $"{Math.Round((decimal)unitConvert.ConvertMileToKilometer(Convert.ToDecimal(period[5].WindSpeed.Substring(0, 2).Trim())))}{speedEnd}");
+                $"{Math.Round((decimal)unitConvert.ConvertKilometerToMile(Convert.ToDecimal(period[5].WindSpeed.Substring(0, 2).Trim())))}{LocalValuesModel.SpeedEnd}");
 
         }
 
@@ -136,18 +128,35 @@ namespace WeatherThisConsole.Views
 
         public async Task SevenDayForecastView()
         {
-            var infoReturn = JsonConvert.DeserializeObject<SevenDayForecastModel>(LocalValuesModel.SevenDayForecast);
+            SevenDayForecastModel infoReturn; 
+            
+            if (LocalValuesModel.IsImperial)
+            {
+                infoReturn = JsonConvert.DeserializeObject<SevenDayForecastModel>(LocalValuesModel.SevenDayForecastImperial);
+            }
+            else
+            {
+                infoReturn = JsonConvert.DeserializeObject<SevenDayForecastModel>(LocalValuesModel.SevenDayForecast);
+            }
+            
             var menuController = new MenuController();
 
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("*** The seven day forecast is in Imperial units ***");
-            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("");
-            
+            Console.WriteLine(" ╔═╗╔═╗╦  ╦╔═╗╔╗╔  ╔╦╗╔═╗╦ ╦  ╔═╗╔═╗╦═╗╔═╗╔═╗╔═╗╔═╗╔╦╗");
+            Console.WriteLine(" ╚═╗║╣ ╚╗╔╝║╣ ║║║   ║║╠═╣╚╦╝  ╠╣ ║ ║╠╦╝║╣ ║  ╠═╣╚═╗ ║ ");
+            Console.WriteLine(" ╚═╝╚═╝ ╚╝ ╚═╝╝╚╝  ═╩╝╩ ╩ ╩   ╚  ╚═╝╩╚═╚═╝╚═╝╩ ╩╚═╝ ╩");
+            Console.WriteLine("");
+
+
             foreach (var period in infoReturn.Properties.Periods)
             {
-                Console.WriteLine($" ■ {period.Name} {period.DetailedForecast}");
+                Console.Write("  ■  ");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write($"{period.Name} ");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine(period.DetailedForecast);
             }
 
             await menuController.ReturnToWelcome();
@@ -177,10 +186,6 @@ namespace WeatherThisConsole.Views
             bool column;
             bool color = true;
 
-            var tempEnd = "°F"; var speedEnd = "mph";
-            if (!LocalValuesModel.IsImperial) { tempEnd = "°C"; speedEnd = "kph"; };
-
-
             foreach (string hour in hourArray)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
@@ -201,8 +206,8 @@ namespace WeatherThisConsole.Views
                         if (hour == snip[j].StartTime.ToString("HH:00") && dayList[i] == snip[j].StartTime.ToString("MMM-dd"))
                         {
                             Console.Write("{0,-15}", 
-                                $"{Math.Round((decimal)unitConvert.ConvertFahrenheitToCelsius(snip[j].Temperature.Value), 0)}{tempEnd} / " +
-                                $"{Math.Round((decimal)unitConvert.ConvertMileToKilometer(Convert.ToDecimal(snip[j].WindSpeed.Substring(0, 2).Trim())))}{speedEnd}");
+                                $"{Math.Round((decimal)unitConvert.ConvertCelsiusToFahrenheit(snip[j].Temperature.Value), 0)}{LocalValuesModel.TempEnd} / " +
+                                $"{Math.Round((decimal)unitConvert.ConvertKilometerToMile(Convert.ToDecimal(snip[j].WindSpeed.Substring(0, 2).Trim())))}{LocalValuesModel.SpeedEnd}");
                             column = false;
                         }
                     }
@@ -243,10 +248,6 @@ namespace WeatherThisConsole.Views
             bool color = true;
             string lastHourDay = "";
 
-            var tempEnd = "°F"; var speedEnd = "mph";
-            if (!LocalValuesModel.IsImperial) { tempEnd = "°C"; speedEnd = "kph"; };
-
-
             foreach (string hour in hourArray)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
@@ -268,8 +269,8 @@ namespace WeatherThisConsole.Views
                             && lastHourDay != hour + dayList[i])
                         {
                             Console.Write("{0,-15}",
-                                $"{Math.Round((decimal)unitConvert.ConvertCelsiusToFahrenheit(snip[j].Properties.Temperature.Value), 0)}{tempEnd} / " +
-                                $"{Math.Round((decimal)unitConvert.ConvertKilometerToMile(Convert.ToDecimal(snip[j].Properties.WindSpeed.Value)))}{speedEnd}");
+                                $"{Math.Round((decimal)unitConvert.ConvertCelsiusToFahrenheit(snip[j].Properties.Temperature.Value), 0)}{LocalValuesModel.TempEnd} / " +
+                                $"{Math.Round((decimal)unitConvert.ConvertKilometerToMile(Convert.ToDecimal(snip[j].Properties.WindSpeed.Value)))}{LocalValuesModel.SpeedEnd}");
 
                             lastHourDay = hour + dayList[i];
                             column = false;
@@ -294,6 +295,8 @@ namespace WeatherThisConsole.Views
             Console.Write("Enter Zip: ");
             var newZip = Console.ReadLine();
 
+            Console.WriteLine("");
+            Console.WriteLine("Loading latitude/longitude from zippopotam.us ...");
             await apiController.GetCoordsFromZip(newZip);
 
             Console.WriteLine("");

@@ -14,12 +14,10 @@ namespace WeatherThisConsole
             var view = new InYourFaceInterface();
             var apiController = new APICallsController();
 
-            LocalValuesModel.IsImperial = true;
-
             view.Header();
 
             Console.WriteLine("");
-            Console.WriteLine("Loading geodata from icanhazip.com ...");
+            Console.WriteLine("Loading IP from icanhazip.com and geodata from ip-api.com ...");
             await apiController.GetGeoDataFromIP();
 
             await apiController.GetLocationData();

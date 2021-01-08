@@ -12,25 +12,11 @@ namespace WeatherThisConsole.Controllers
             if (!LocalValuesModel.IsImperial) returnValue = celsiusValue;
             return returnValue;
         }
-        public decimal? ConvertFahrenheitToCelsius(decimal? fahrenheitValue)
-        {
-            if (fahrenheitValue is null) return 0;
-            var returnValue = (fahrenheitValue - Convert.ToDecimal(32)) * Convert.ToDecimal(1.8);
-            if (LocalValuesModel.IsImperial) returnValue = fahrenheitValue;
-            return returnValue;
-        }
         public decimal? ConvertKilometerToMile(decimal? kilometerValue)
         {
             if (kilometerValue is null) return 0;
             var returnValue = kilometerValue * Convert.ToDecimal(1.60934);
             if (!LocalValuesModel.IsImperial) returnValue = kilometerValue;
-            return returnValue;
-        }
-        public decimal? ConvertMileToKilometer(decimal? mileValue)
-        {
-            if (mileValue is null) return 0;
-            var returnValue = mileValue / Convert.ToDecimal(1.60934);
-            if (LocalValuesModel.IsImperial) returnValue = mileValue;
             return returnValue;
         }
         public string ConvertDegreeToDirection(decimal? degreeValue)

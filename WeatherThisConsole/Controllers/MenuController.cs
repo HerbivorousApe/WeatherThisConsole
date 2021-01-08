@@ -10,6 +10,7 @@ namespace WeatherThisConsole.Controllers
         public async Task Menu(ConsoleKey keyPress)
         {
             var view = new InYourFaceInterface();
+            var misc = new MiscController();
 
             switch (keyPress)
             {
@@ -26,8 +27,8 @@ namespace WeatherThisConsole.Controllers
                 case ConsoleKey.D4: await view.UpdateZipView(); break;
                 case ConsoleKey.NumPad4: await view.UpdateZipView(); break;
 
-                case ConsoleKey.D5: LocalValuesModel.IsImperial = !LocalValuesModel.IsImperial; await view.Welcome(); break;
-                case ConsoleKey.NumPad5: LocalValuesModel.IsImperial = !LocalValuesModel.IsImperial; await view.Welcome(); break;
+                case ConsoleKey.D5: misc.FlipIsImperial(); await view.Welcome(); break;
+                case ConsoleKey.NumPad5: misc.FlipIsImperial(); await view.Welcome(); break;
 
                 case ConsoleKey.Escape: Environment.Exit(0); break;
 

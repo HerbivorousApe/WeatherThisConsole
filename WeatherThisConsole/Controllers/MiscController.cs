@@ -55,5 +55,13 @@ namespace WeatherThisConsole.Controllers
 
             return twentyFourHours;
         }
+
+        public void FlipIsImperial()
+        {
+            LocalValuesModel.IsImperial = !LocalValuesModel.IsImperial;
+
+            if (LocalValuesModel.IsImperial) { LocalValuesModel.TempEnd = "°F"; LocalValuesModel.SpeedEnd = "mph";  }
+            else { LocalValuesModel.TempEnd = "°C"; LocalValuesModel.SpeedEnd = "kph"; };
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using WeatherThisConsole.Models;
@@ -37,14 +38,29 @@ namespace WeatherThisConsole.Controllers
 
         public async Task GetCoordsFromZip(string zip) // link = http://api.zippopotam.us/us/36695
         {
-            var client = new HttpClient();
-            var response = await client.GetStringAsync($"http://api.zippopotam.us/us/{zip}");
-            CoordsFromZipModel infoReturn = JsonConvert.DeserializeObject<CoordsFromZipModel>(response);
+            try 
+            {
+                var client = new HttpClient();
+                var response = await client.GetStringAsync($"http://api.zippopotam.us/us/{zip}");
+                CoordsFromZipModel infoReturn = JsonConvert.DeserializeObject<CoordsFromZipModel>(response);
 
-            LocalValuesModel.Latitude = Convert.ToDouble(infoReturn.Places[0].Latitude);
-            LocalValuesModel.Longitude = Convert.ToDouble(infoReturn.Places[0].Longitude);
-            LocalValuesModel.City = infoReturn.Places[0].PlaceName;
-            LocalValuesModel.State = infoReturn.Places[0].State;
+                LocalValuesModel.Latitude = Convert.ToDouble(infoReturn.Places[0].Latitude);
+                LocalValuesModel.Longitude = Convert.ToDouble(infoReturn.Places[0].Longitude);
+                LocalValuesModel.City = infoReturn.Places[0].PlaceName;
+                LocalValuesModel.State = infoReturn.Places[0].State;
+            }
+            catch(Exception ex)
+            {
+                var menuController = new MenuController();
+                Console.WriteLine("");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"An error occured recovering zip code data.");
+                Console.WriteLine("");
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine($"Error: {ex}");
+                Console.WriteLine("");
+                await menuController.ReturnToWelcome();
+            }
         }
 
         public async Task GetGeoDataFromIP() // link = http://ip-api.com/json/2600:1700:c910:1900::43?fields=regionName,city,district,zip,lat,lon
@@ -77,29 +93,31 @@ namespace WeatherThisConsole.Controllers
             LocalValuesModel.SevenDayForecastLink = infoReturn.Properties.Forecast;
         }
 
-        public async Task GetSevenDayForecast() // apiLink = https://api.weather.gov/gridpoints/MOB/44,64/forecast
+        public async Task GetSevenDayForecast() // apiLink = https://api.weather.gov/gridpoints/MOB/44,64/forecast?units=si
         {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Add("User-Agent", "SlackShack");
-
-            var response = await client.GetStringAsync(LocalValuesModel.SevenDayForecastLink);
+            var link = LocalValuesModel.SevenDayForecastLink + "?units=si";
+            var response = await client.GetStringAsync(link);
 
             LocalValuesModel.SevenDayForecast = response;
+
+            link = LocalValuesModel.SevenDayForecastLink;
+            var responseImperial = await client.GetStringAsync(link);
+
+            LocalValuesModel.SevenDayForecastImperial = responseImperial;
         }
 
-
-
-        public async Task GetSevenDayForecastHourly() // link = https://api.weather.gov/gridpoints/MOB/44,64/forecast/hourly
+        public async Task GetSevenDayForecastHourly() // link = https://api.weather.gov/gridpoints/MOB/44,64/forecast/hourly?units=si
         {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Add("User-Agent", "SlackShack");
             
-            var link = LocalValuesModel.SevenDayForecastLink + "/hourly";
+            var link = LocalValuesModel.SevenDayForecastLink + "/hourly?units=si";
             var response = await client.GetStringAsync(link);
 
             LocalValuesModel.SevenDayForecastHourly = response;
         }
-
 
         public async Task GetCurrentObservationData()  // link = https://api.weather.gov/stations/KMOB/observations
         {
@@ -123,7 +141,6 @@ namespace WeatherThisConsole.Controllers
 
             ObservationStationModel infoReturn = JsonConvert.DeserializeObject<ObservationStationModel>(response);
 
-            //LocalValuesModel.ObservationStations = response; // For future option to choose a different observation station
             LocalValuesModel.RadarStation = infoReturn.Features[0].Properties.StationIdentifier;
             
         }

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
-using WeatherThisConsole.Models;
+﻿using System.Threading.Tasks;
 using WeatherThisConsole.Views;
-using WeatherThisConsole.Controllers;
-
 
 namespace WeatherThisConsole
 {
@@ -11,16 +7,12 @@ namespace WeatherThisConsole
     {
         static async Task Main()
         {    
-            var view = new InYourFaceInterface();
-            var apiController = new APICallsController();
+            var view = new MainWelcomeView();
+                view.Header();
 
-            view.Header();
-
-            Console.WriteLine("");
-            Console.WriteLine("Loading IP from icanhazip.com and geodata from ip-api.com ...");
-            await apiController.GetGeoDataFromIP();
-
-            await apiController.GetLocationData();
+            var apiView = new APICallsView();
+                await apiView.GetGeoDataFromIP();
+                await apiView.GetLocationData();
         }
     }
 }

@@ -42,7 +42,6 @@ namespace WeatherThisConsole.Controllers
             if (degreeValue >= Convert.ToDecimal(303.75) && degreeValue < Convert.ToDecimal(326.25)) returnValue = "NW";
             if (degreeValue >= Convert.ToDecimal(326.25) && degreeValue < Convert.ToDecimal(348.75)) returnValue = "NNW";
 
-
             return returnValue;
         }
     }

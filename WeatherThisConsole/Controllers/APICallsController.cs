@@ -1,49 +1,16 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using WeatherThisConsole.Models;
-using WeatherThisConsole.Views;
 
 namespace WeatherThisConsole.Controllers
 {
     class APICallsController
     {
-        public async Task GetLocationData()
-        {
-            Console.WriteLine("");
-            Console.WriteLine("Loading location details from weather.gov ...");
-            await GetWeatherLocationData();
-
-            Console.WriteLine("");
-            Console.WriteLine("Loading alert data from weather.gov ...");
-            await GetAlertData();
-
-            Console.WriteLine("");
-            Console.WriteLine("Loading observation station identifier from weather.gov ...");
-            await GetCurrentObservationStations();
-
-            Console.WriteLine("");
-            Console.WriteLine("Loading current and historical observation data from weather.gov ...");
-            await GetCurrentObservationData();
-
-            Console.WriteLine("");
-            Console.WriteLine("Loading aggregate weather forecast data from weather.gov ...");
-            await GetSevenDayForecast();
-
-            Console.WriteLine("");
-            Console.WriteLine("Loading granular forecast data from weather.gov ...");
-            await GetSevenDayForecastHourly();
-
-            var view = new InYourFaceInterface();
-            await view.Welcome();
-        }
 
         public async Task GetCoordsFromZip(string zip) // link = http://api.zippopotam.us/us/36695
         {
-            try 
-            {
                 var client = new HttpClient();
                 var response = await client.GetStringAsync($"http://api.zippopotam.us/us/{zip}");
                 CoordsFromZipModel infoReturn = JsonConvert.DeserializeObject<CoordsFromZipModel>(response);
@@ -52,19 +19,7 @@ namespace WeatherThisConsole.Controllers
                 LocalValuesModel.Longitude = Convert.ToDouble(infoReturn.Places[0].Longitude);
                 LocalValuesModel.City = infoReturn.Places[0].PlaceName;
                 LocalValuesModel.State = infoReturn.Places[0].State;
-            }
-            catch(Exception ex)
-            {
-                var menuController = new MenuController();
-                Console.WriteLine("");
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"An error occured recovering zip code data.");
-                Console.WriteLine("");
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine($"Error: {ex}");
-                Console.WriteLine("");
-                await menuController.ReturnToWelcome();
-            }
+
         }
 
         public async Task GetGeoDataFromIP() // link = http://ip-api.com/json/2600:1700:c910:1900::43?fields=regionName,city,district,zip,lat,lon

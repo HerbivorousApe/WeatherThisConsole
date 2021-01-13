@@ -8,27 +8,23 @@ namespace WeatherThisConsole.Views
 {
     class SevenDayHistoryHourlyView
     {
-        public async Task SevenDayHistoryHourly()
+        public static async Task SevenDayHistoryHourly()
         {
             var infoReturn = JsonConvert.DeserializeObject<CurrentObservationModel>(LocalValuesModel.CurrentObservation);
-            var unitConvert = new UnitConverterController();
-            var menuView = new MenuView();
-
-            var miscController = new MiscController();
             var snip = infoReturn.Features;
 
             Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write("{0,-12}", " TIME");
 
-            var dayList = miscController.CreateDayListHistory();
+            var dayList = MiscController.CreateDayListHistory();
 
             for (int i = 0; i < 7; i++)
             {
                 Console.Write("{0,-15}", $"  {dayList[i]}");
             }
 
-            var hourArray = miscController.CreateTwentyFourHours();
+            var hourArray = MiscController.CreateTwentyFourHours();
             bool column;
             bool color = true;
             string lastHourDay = "";
@@ -54,8 +50,8 @@ namespace WeatherThisConsole.Views
                             && lastHourDay != hour + dayList[i])
                         {
                             Console.Write("{0,-15}",
-                                $"{Math.Round((decimal)unitConvert.ConvertCelsiusToFahrenheit(snip[j].Properties.Temperature.Value), 0)}{LocalValuesModel.TempEnd} / " +
-                                $"{Math.Round((decimal)unitConvert.ConvertKilometerToMile(Convert.ToDecimal(snip[j].Properties.WindSpeed.Value)))}{LocalValuesModel.SpeedEnd}");
+                                $"{Math.Round((decimal)UnitConverterController.ConvertCelsiusToFahrenheit(snip[j].Properties.Temperature.Value), 0)}{LocalValuesModel.TempEnd} / " +
+                                $"{Math.Round((decimal)UnitConverterController.ConvertKilometerToMile(Convert.ToDecimal(snip[j].Properties.WindSpeed.Value)))}{LocalValuesModel.SpeedEnd}");
 
                             lastHourDay = hour + dayList[i];
                             column = false;
@@ -70,7 +66,7 @@ namespace WeatherThisConsole.Views
 
             }
             Console.WriteLine("");
-            await menuView.ReturnToWelcome();
+            await MenuView.ReturnToWelcome();
         }
     }
 }

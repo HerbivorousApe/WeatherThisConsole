@@ -8,27 +8,23 @@ namespace WeatherThisConsole.Views
 {
     class SevenDayForecastHourlyView
     {
-        public async Task SevenDayForecastHourly()
+        public static async Task SevenDayForecastHourly()
         {
             var infoReturn = JsonConvert.DeserializeObject<SevenDayForecastHourlyModel>(LocalValuesModel.SevenDayForecastHourly);
-            var unitConvert = new UnitConverterController();
-            var menuView = new MenuView();
-
-            var miscController = new MiscController();
             var snip = infoReturn.Properties.Periods;
 
             Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write("{0,-12}", " TIME");
 
-            var dayList = miscController.CreateDayListForecast();
+            var dayList = MiscController.CreateDayListForecast();
 
             for (int i = 0; i < 7; i++)
             {
                 Console.Write("{0,-15}", $"  {dayList[i]}");
             }
 
-            var hourArray = miscController.CreateTwentyFourHours();
+            var hourArray = MiscController.CreateTwentyFourHours();
             bool column;
             bool color = true;
 
@@ -52,8 +48,8 @@ namespace WeatherThisConsole.Views
                         if (hour == snip[j].StartTime.ToString("HH:00") && dayList[i] == snip[j].StartTime.ToString("MMM-dd"))
                         {
                             Console.Write("{0,-15}",
-                                $"{Math.Round((decimal)unitConvert.ConvertCelsiusToFahrenheit(snip[j].Temperature.Value), 0)}{LocalValuesModel.TempEnd} / " +
-                                $"{Math.Round((decimal)unitConvert.ConvertKilometerToMile(Convert.ToDecimal(snip[j].WindSpeed.Substring(0, 2).Trim())))}{LocalValuesModel.SpeedEnd}");
+                                $"{Math.Round((decimal)UnitConverterController.ConvertCelsiusToFahrenheit(snip[j].Temperature.Value), 0)}{LocalValuesModel.TempEnd} / " +
+                                $"{Math.Round((decimal)UnitConverterController.ConvertKilometerToMile(Convert.ToDecimal(snip[j].WindSpeed.Substring(0, 2).Trim())))}{LocalValuesModel.SpeedEnd}");
                             column = false;
                         }
                     }
@@ -66,7 +62,7 @@ namespace WeatherThisConsole.Views
 
             }
             Console.WriteLine("");
-            await menuView.ReturnToWelcome();
+            await MenuView.ReturnToWelcome();
         }
     }
 }

@@ -5,21 +5,21 @@ namespace WeatherThisConsole.Controllers
 {
     class UnitConverterController
     {
-        public decimal? ConvertCelsiusToFahrenheit(decimal? celsiusValue)
+        public static decimal? ConvertCelsiusToFahrenheit(decimal? celsiusValue)
         {
             if (celsiusValue is null) return 0;
             var returnValue = (celsiusValue * Convert.ToDecimal(1.8)) + 32;
             if (!LocalValuesModel.IsImperial) returnValue = celsiusValue;
             return returnValue;
         }
-        public decimal? ConvertKilometerToMile(decimal? kilometerValue)
+        public static decimal? ConvertKilometerToMile(decimal? kilometerValue)
         {
             if (kilometerValue is null) return 0;
             var returnValue = kilometerValue * Convert.ToDecimal(1.60934);
             if (!LocalValuesModel.IsImperial) returnValue = kilometerValue;
             return returnValue;
         }
-        public string ConvertDegreeToDirection(decimal? degreeValue)
+        public static string ConvertDegreeToDirection(decimal? degreeValue)
         {
             string returnValue = "-";
 

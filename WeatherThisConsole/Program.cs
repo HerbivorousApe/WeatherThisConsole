@@ -7,12 +7,11 @@ namespace WeatherThisConsole
     {
         static async Task Main()
         {    
-            var view = new MainWelcomeView();
-                view.Header();
+            MainWelcomeView.Header();
 
-            var apiView = new APICallsView();
-                await apiView.GetGeoDataFromIP();
-                await apiView.GetLocationData();
+            await APICallsView.GetGeoDataFromIP();
+            await APICallsView.GetLocationData();
+
         }
     }
 }

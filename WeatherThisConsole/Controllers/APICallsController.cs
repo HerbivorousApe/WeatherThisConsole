@@ -9,7 +9,7 @@ namespace WeatherThisConsole.Controllers
     class APICallsController
     {
 
-        public async Task GetCoordsFromZip(string zip) // link = http://api.zippopotam.us/us/36695
+        public static async Task GetCoordsFromZip(string zip) // link = http://api.zippopotam.us/us/36695
         {
                 var client = new HttpClient();
                 var response = await client.GetStringAsync($"http://api.zippopotam.us/us/{zip}");
@@ -22,7 +22,7 @@ namespace WeatherThisConsole.Controllers
 
         }
 
-        public async Task GetGeoDataFromIP() // link = http://ip-api.com/json/2600:1700:c910:1900::43?fields=regionName,city,district,zip,lat,lon
+        public static async Task GetGeoDataFromIP() // link = http://ip-api.com/json/2600:1700:c910:1900::43?fields=regionName,city,district,zip,lat,lon
         {
             var client = new HttpClient();
             string externalIp = await client.GetStringAsync("http://icanhazip.com");
@@ -38,7 +38,7 @@ namespace WeatherThisConsole.Controllers
             LocalValuesModel.State = infoReturn.RegionName;
         }
 
-        public async Task GetWeatherLocationData() // Link = https://api.weather.gov/points/34.0901,-118.4065
+        public static async Task GetWeatherLocationData() // Link = https://api.weather.gov/points/34.0901,-118.4065
         {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Add("User-Agent", "SlackShack");
@@ -53,7 +53,7 @@ namespace WeatherThisConsole.Controllers
             LocalValuesModel.ForecastZone = infoReturn.Properties.ForecastZone.Replace("https://api.weather.gov/zones/forecast/", "");
         }
 
-        public async Task GetAlertData() //https://api.weather.gov/alerts?active=true&status=actual
+        public static async Task GetAlertData() //https://api.weather.gov/alerts?active=true&status=actual
         {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Add("User-Agent", "SlackShack");
@@ -63,7 +63,7 @@ namespace WeatherThisConsole.Controllers
             LocalValuesModel.Alerts = response;
         }
 
-        public async Task GetSevenDayForecast() // apiLink = https://api.weather.gov/gridpoints/MOB/44,64/forecast?units=si
+        public static async Task GetSevenDayForecast() // apiLink = https://api.weather.gov/gridpoints/MOB/44,64/forecast?units=si
         {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Add("User-Agent", "SlackShack");
@@ -78,7 +78,7 @@ namespace WeatherThisConsole.Controllers
             LocalValuesModel.SevenDayForecastImperial = responseImperial;
         }
 
-        public async Task GetSevenDayForecastHourly() // link = https://api.weather.gov/gridpoints/MOB/44,64/forecast/hourly?units=si
+        public static async Task GetSevenDayForecastHourly() // link = https://api.weather.gov/gridpoints/MOB/44,64/forecast/hourly?units=si
         {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Add("User-Agent", "SlackShack");
@@ -89,7 +89,7 @@ namespace WeatherThisConsole.Controllers
             LocalValuesModel.SevenDayForecastHourly = response;
         }
 
-        public async Task GetCurrentObservationData()  // link = https://api.weather.gov/stations/KMOB/observations
+        public static async Task GetCurrentObservationData()  // link = https://api.weather.gov/stations/KMOB/observations
         {
             HttpClient client = new HttpClient();
             var link = $"https://api.weather.gov/stations/{LocalValuesModel.RadarStation}/observations";
@@ -101,7 +101,7 @@ namespace WeatherThisConsole.Controllers
         }
 
 
-        public async Task GetCurrentObservationStations()  // link = https://api.weather.gov/gridpoints/MOB/44,65/stations
+        public static async Task GetCurrentObservationStations()  // link = https://api.weather.gov/gridpoints/MOB/44,65/stations
         {
             HttpClient client = new HttpClient();
             var link = LocalValuesModel.ObservationStationLink;

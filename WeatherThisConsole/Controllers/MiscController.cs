@@ -6,7 +6,7 @@ namespace WeatherThisConsole.Controllers
 {
     class MiscController
     {
-        public List<string> CreateDayListForecast()
+        public static List<string> CreateDayListForecast()
         {
             var infoReturn = JsonConvert.DeserializeObject<SevenDayForecastHourlyModel>(LocalValuesModel.SevenDayForecastHourly);
 
@@ -25,7 +25,7 @@ namespace WeatherThisConsole.Controllers
             return returnValue;
         }
 
-        public List<string> CreateDayListHistory()
+        public static List<string> CreateDayListHistory()
         {
             var infoReturn = JsonConvert.DeserializeObject<CurrentObservationModel>(LocalValuesModel.CurrentObservation);
 
@@ -44,7 +44,7 @@ namespace WeatherThisConsole.Controllers
             return returnValue;
         }
 
-        public List<string> CreateTwentyFourHours()
+        public static List<string> CreateTwentyFourHours()
         {
             var twentyFourHours = new List<string>()
             {
@@ -54,7 +54,7 @@ namespace WeatherThisConsole.Controllers
             return twentyFourHours;
         }
 
-        public void FlipIsImperial()
+        public static void FlipIsImperial()
         {
             LocalValuesModel.IsImperial = !LocalValuesModel.IsImperial;
 

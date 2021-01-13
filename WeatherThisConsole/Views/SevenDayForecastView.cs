@@ -7,7 +7,7 @@ namespace WeatherThisConsole.Views
 {
     class SevenDayForecastView
     {
-        public async Task SevenDayForecast()
+        public static async Task SevenDayForecast()
         {
             SevenDayForecastModel infoReturn;
 
@@ -19,8 +19,6 @@ namespace WeatherThisConsole.Views
             {
                 infoReturn = JsonConvert.DeserializeObject<SevenDayForecastModel>(LocalValuesModel.SevenDayForecast);
             }
-
-            var menuView = new MenuView();
 
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("");
@@ -40,7 +38,7 @@ namespace WeatherThisConsole.Views
                 Console.WriteLine(period.DetailedForecast);
             }
 
-            await menuView.ReturnToWelcome();
+            await MenuView.ReturnToWelcome();
         }
     }
 }

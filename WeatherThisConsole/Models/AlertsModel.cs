@@ -16,7 +16,7 @@ namespace WeatherThisConsole.Models
 
     class AlertsFeaturesProperties
     {
-        public string Event { get; set; }
+        public static string Event { get; set; }
         public string Headline { get; set; }
         public string Description { get; set; }
         public string Instruction { get; set; }

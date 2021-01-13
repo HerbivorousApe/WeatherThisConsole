@@ -8,7 +8,7 @@ namespace WeatherThisConsole.Views
 {
     class MainWelcomeView
     {
-        public void Header()
+        public static void Header()
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.White;
@@ -23,7 +23,7 @@ namespace WeatherThisConsole.Views
             Console.ForegroundColor = ConsoleColor.Gray;
         }
 
-        public async Task Welcome()
+        public static async Task Welcome()
         {
             Header();
 
@@ -42,21 +42,19 @@ namespace WeatherThisConsole.Views
             Console.WriteLine("");
             Alerts();
 
-            var menuView = new MenuView();
-            await menuView.Menu();
+            await MenuView.Menu();
         }
 
-        public void CurrentObservationData()
+        public static void CurrentObservationData()
         {
             var infoReturn = JsonConvert.DeserializeObject<CurrentObservationModel>(LocalValuesModel.CurrentObservation);
-            var unitConvert = new UnitConverterController();
 
             var current = infoReturn.Features[0].Properties;
 
-            var temp = Math.Round(Convert.ToDecimal(unitConvert.ConvertCelsiusToFahrenheit(current.Temperature.Value)));
-            var dew = Math.Round(Convert.ToDecimal(unitConvert.ConvertCelsiusToFahrenheit(current.Dewpoint.Value)));
-            var wind = Math.Round(Convert.ToDecimal(unitConvert.ConvertKilometerToMile(current.WindSpeed.Value)));
-            var windDir = unitConvert.ConvertDegreeToDirection(current.WindDirection.Value);
+            var temp = Math.Round(Convert.ToDecimal(UnitConverterController.ConvertCelsiusToFahrenheit(current.Temperature.Value)));
+            var dew = Math.Round(Convert.ToDecimal(UnitConverterController.ConvertCelsiusToFahrenheit(current.Dewpoint.Value)));
+            var wind = Math.Round(Convert.ToDecimal(UnitConverterController.ConvertKilometerToMile(current.WindSpeed.Value)));
+            var windDir = UnitConverterController.ConvertDegreeToDirection(current.WindDirection.Value);
             var humidity = Math.Round(Convert.ToDecimal(current.RelativeHumidity.Value));
 
             Console.Write("{0,-30}", " Current Conditions:");
@@ -66,11 +64,9 @@ namespace WeatherThisConsole.Views
             Console.WriteLine("{0,-20}", $"DWPT: {dew}{LocalValuesModel.TempEnd}");
         }
 
-        public void SeventyTwoHourForecast()
+        public static void SeventyTwoHourForecast()
         {
             var infoReturn = JsonConvert.DeserializeObject<SevenDayForecastModel>(LocalValuesModel.SevenDayForecast);
-            var unitConvert = new UnitConverterController();
-
             var period = infoReturn.Properties.Periods;
 
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -82,28 +78,28 @@ namespace WeatherThisConsole.Views
             Console.WriteLine("{0,-20}", period[5].Name);
             Console.ForegroundColor = ConsoleColor.Gray;
 
-            Console.Write("{0,-20}", $"  {Math.Round((decimal)unitConvert.ConvertCelsiusToFahrenheit(period[0].Temperature), 0)}{LocalValuesModel.TempEnd}");
-            Console.Write("{0,-20}", $"  {Math.Round((decimal)unitConvert.ConvertCelsiusToFahrenheit(period[1].Temperature), 0)}{LocalValuesModel.TempEnd}");
-            Console.Write("{0,-20}", $"  {Math.Round((decimal)unitConvert.ConvertCelsiusToFahrenheit(period[2].Temperature), 0)}{LocalValuesModel.TempEnd}");
-            Console.Write("{0,-20}", $"  {Math.Round((decimal)unitConvert.ConvertCelsiusToFahrenheit(period[3].Temperature), 0)}{LocalValuesModel.TempEnd}");
-            Console.Write("{0,-20}", $"  {Math.Round((decimal)unitConvert.ConvertCelsiusToFahrenheit(period[4].Temperature), 0)}{LocalValuesModel.TempEnd}");
-            Console.WriteLine("{0,-20}", $"  {Math.Round((decimal)unitConvert.ConvertCelsiusToFahrenheit(period[5].Temperature), 0)}{LocalValuesModel.TempEnd}");
+            Console.Write("{0,-20}", $"  {Math.Round((decimal)UnitConverterController.ConvertCelsiusToFahrenheit(period[0].Temperature), 0)}{LocalValuesModel.TempEnd}");
+            Console.Write("{0,-20}", $"  {Math.Round((decimal)UnitConverterController.ConvertCelsiusToFahrenheit(period[1].Temperature), 0)}{LocalValuesModel.TempEnd}");
+            Console.Write("{0,-20}", $"  {Math.Round((decimal)UnitConverterController.ConvertCelsiusToFahrenheit(period[2].Temperature), 0)}{LocalValuesModel.TempEnd}");
+            Console.Write("{0,-20}", $"  {Math.Round((decimal)UnitConverterController.ConvertCelsiusToFahrenheit(period[3].Temperature), 0)}{LocalValuesModel.TempEnd}");
+            Console.Write("{0,-20}", $"  {Math.Round((decimal)UnitConverterController.ConvertCelsiusToFahrenheit(period[4].Temperature), 0)}{LocalValuesModel.TempEnd}");
+            Console.WriteLine("{0,-20}", $"  {Math.Round((decimal)UnitConverterController.ConvertCelsiusToFahrenheit(period[5].Temperature), 0)}{LocalValuesModel.TempEnd}");
 
             Console.Write("{0,-20}", $" WND: {period[0].WindDirection} " +
-                $"{Math.Round((decimal)unitConvert.ConvertKilometerToMile(Convert.ToDecimal(period[0].WindSpeed.Substring(0, 2).Trim())))}{LocalValuesModel.SpeedEnd}");
+                $"{Math.Round((decimal)UnitConverterController.ConvertKilometerToMile(Convert.ToDecimal(period[0].WindSpeed.Substring(0, 2).Trim())))}{LocalValuesModel.SpeedEnd}");
             Console.Write("{0,-20}", $"WND: {period[1].WindDirection} " +
-                $"{Math.Round((decimal)unitConvert.ConvertKilometerToMile(Convert.ToDecimal(period[1].WindSpeed.Substring(0, 2).Trim())))}{LocalValuesModel.SpeedEnd}");
+                $"{Math.Round((decimal)UnitConverterController.ConvertKilometerToMile(Convert.ToDecimal(period[1].WindSpeed.Substring(0, 2).Trim())))}{LocalValuesModel.SpeedEnd}");
             Console.Write("{0,-20}", $"WND: {period[2].WindDirection} " +
-                $"{Math.Round((decimal)unitConvert.ConvertKilometerToMile(Convert.ToDecimal(period[2].WindSpeed.Substring(0, 2).Trim())))}{LocalValuesModel.SpeedEnd}");
+                $"{Math.Round((decimal)UnitConverterController.ConvertKilometerToMile(Convert.ToDecimal(period[2].WindSpeed.Substring(0, 2).Trim())))}{LocalValuesModel.SpeedEnd}");
             Console.Write("{0,-20}", $"WND: {period[3].WindDirection} " +
-                $"{Math.Round((decimal)unitConvert.ConvertKilometerToMile(Convert.ToDecimal(period[3].WindSpeed.Substring(0, 2).Trim())))}{LocalValuesModel.SpeedEnd}");
+                $"{Math.Round((decimal)UnitConverterController.ConvertKilometerToMile(Convert.ToDecimal(period[3].WindSpeed.Substring(0, 2).Trim())))}{LocalValuesModel.SpeedEnd}");
             Console.Write("{0,-20}", $"WND: {period[4].WindDirection} " +
-                $"{Math.Round((decimal)unitConvert.ConvertKilometerToMile(Convert.ToDecimal(period[4].WindSpeed.Substring(0, 2).Trim())))}{LocalValuesModel.SpeedEnd}");
+                $"{Math.Round((decimal)UnitConverterController.ConvertKilometerToMile(Convert.ToDecimal(period[4].WindSpeed.Substring(0, 2).Trim())))}{LocalValuesModel.SpeedEnd}");
             Console.WriteLine("{0,-20}", $"WND: {period[5].WindDirection} " +
-                $"{Math.Round((decimal)unitConvert.ConvertKilometerToMile(Convert.ToDecimal(period[5].WindSpeed.Substring(0, 2).Trim())))}{LocalValuesModel.SpeedEnd}");
+                $"{Math.Round((decimal)UnitConverterController.ConvertKilometerToMile(Convert.ToDecimal(period[5].WindSpeed.Substring(0, 2).Trim())))}{LocalValuesModel.SpeedEnd}");
         }
 
-        public void Alerts()
+        public static void Alerts()
         {
             var infoReturn = JsonConvert.DeserializeObject<AlertsModel>(LocalValuesModel.Alerts);
 
